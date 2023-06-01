@@ -3,27 +3,23 @@
 
 int isPrime(unsigned int num)
 {
+    int isPrime = 1;
     if (num == 1)
     {
-        return 1;
+        isPrime = 1;
     }
     if (num == 0 || num == 2)
     {
-        return 0;
+        isPrime = 0;
     }
-    for (int i = 3; i <= sqrt(num); i++)
+    // Check divisibility from 2 to square root of num
+    for (int i = 2; i * i <= num; i++)
     {
         if (num % i == 0)
         {
-            return 0;
+            isPrime = 0; 
+            break;
         }
     }
-    return 1;
 }
 
-int main()
-{
-    printf("2: %d\n",isPrime(2));
-    printf("3: %d\n",isPrime(3));
-    printf("17: %d\n",isPrime(17));
-}

@@ -1,4 +1,5 @@
 #include "activeObject.h"
+#include <stdlib.h>
 #include <pthread.h>
 
 
@@ -9,27 +10,29 @@ void* activeObjectThread(void *object)
     void *task;
     while(task = dequeue(AO->queue))
     {
-        AO->func(task);
+        AO->func(AO->next,task);
     }
 }
 
-void createActiveObject(void (*otherFunc)(void* item))
+activeObject * createActiveObject(activeObject * next, void (*otherFunc)(activeObject * AO ,  void* item))
 {
     activeObject* AO = (activeObject*)(malloc(sizeof(activeObject)));
     
     if (AO == NULL)
     {
-        return;
+        return NULL;
     }
 
     AO->func = otherFunc;
+    AO->next = next;
     Queue* q = (Queue*)malloc(sizeof(Queue));
     initializeQueue(q,10);
     AO->queue=q;
-    pthread_create(&(AO->thread) , NULL , activeObjectThread , (void*)AO);   
+    pthread_create(&(AO->thread) , NULL , activeObjectThread , (void*)AO);
+    return AO;
 }
 
-Queue *getQueue(activeObject* AO)
+pqueue getQueue(activeObject* AO)
 {
     return AO->queue;
 }

@@ -1,3 +1,4 @@
+#pragma once
 #include <pthread.h>
 #include <stdio.h>
 
@@ -10,7 +11,7 @@ typedef struct Queue
     int tail;
     pthread_mutex_t mutex;
     pthread_cond_t cond;
-}Queue;
+}Queue , *pqueue;
 
 void initializeQueue(Queue* queue, int capacity);
 void enqueue(Queue *queue , void *item);

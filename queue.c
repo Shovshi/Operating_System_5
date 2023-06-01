@@ -1,4 +1,5 @@
 #include "queue.h"
+#include <stdlib.h>
 
 void initializeQueue(Queue* queue, int capacity)
 {

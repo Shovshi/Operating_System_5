@@ -2,12 +2,13 @@
 
 typedef struct activeObject
 {
-    void(*func)(void* item); 
+    void(*func)(struct activeObject * AO, void* item); 
     Queue *queue;                 
-    pthread_t thread;             
-} activeObject;
+    pthread_t thread; 
+    struct activeObject * next;
+}activeObject;
 
 void* activeObjectThread(void *object);
-void createActiveObject(void (*otherFunc)(void* item));
-Queue *getQueue(activeObject* AO);
-void stop();
+activeObject * createActiveObject(activeObject * next, void (*otherFunc)(activeObject * AO ,  void* item));
+pqueue getQueue(activeObject* AO);
+void stop(activeObject *AO);
