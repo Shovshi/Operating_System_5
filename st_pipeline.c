@@ -97,25 +97,17 @@ int main(int argc, char *argv[])
     }
 
 
-    while (firstAO->queue->size > 0)
-    {
-    }
+    while (firstAO->queue->size > 0) {}
     sleep(1);
     stop(firstAO);
 
-    while (secondAO->queue->size > 0)
-    {
-    }
+    while (secondAO->queue->size > 0) {}
     stop(secondAO);
 
-    while (thirdAO->queue->size > 0)
-    {
-    }
+    while (thirdAO->queue->size > 0) {}
     stop(thirdAO);
 
-    while (fourthAO->queue->size > 0)
-    {
-    }
+    while (fourthAO->queue->size > 0) {}
     stop(fourthAO);
 
     return 0;
