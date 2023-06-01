@@ -21,5 +21,7 @@ int isPrime(unsigned int num)
             break;
         }
     }
+
+    return isPrime;
 }
 

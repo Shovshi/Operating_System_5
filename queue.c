@@ -3,7 +3,7 @@
 
 void initializeQueue(Queue* queue, int capacity)
 {
-    queue->items = (void*)malloc(capacity * sizeof(void));
+    queue->items = (void**)malloc(capacity * sizeof(void*));
     queue->capacity = capacity;
     queue->size = 0;
     queue->head = 0;

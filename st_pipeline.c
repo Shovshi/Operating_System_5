@@ -8,19 +8,19 @@
 
 void first_ao(activeObject *next, void *otherSeed)
 {
-    int seed = *(int *)otherSeed;
-    srand(seed);
-    int randomNum = rand() % 900000 + 100000;
-    void *item = &randomNum;
+    int min = 100000;
+    int max = 999999;
+    int rand_num;
+    rand_num = (rand() % (max - min + 1)) + min;
+    void *task = &rand_num;
     sleep(1);
-    enqueue(getQueue(next), item);
-    printf("First Active Object Number: %d\n", *(int *)item);
+    enqueue(getQueue(next), task);
 }
 
 void second_ao(activeObject *next, void *item)
 {
     int num = *(int *)(item);
-    printf("Second Active Object Number: %d\n", num);
+    printf("%d\n", num);
     if (isPrime(num))
     {
         printf("True\n");
@@ -30,17 +30,16 @@ void second_ao(activeObject *next, void *item)
         printf("False\n");
     }
     num += 11;
-    void *numPoint = &num;
-    printf("TESTING: %d\n", *(int *)numPoint);
+    int* numPoint = malloc(sizeof(int));
+    *numPoint = num;
     enqueue(getQueue(next), numPoint);
-    printf("Second Active Object Number After Adding 11: %d\n", num);
 }
+
 
 void third_ao(activeObject *next, void *item)
 {
-    printf("Third Active Object: %d\n", *(int *)(item));
     int num = *(int *)(item);
-    printf("Third Active Object: %d\n", num);
+    printf("%d\n", num);
     if (isPrime(num))
     {
         printf("True\n");
@@ -50,16 +49,19 @@ void third_ao(activeObject *next, void *item)
         printf("False\n");
     }
     num -= 13;
-    void *numPoint = &num;
+    int* numPoint = malloc(sizeof(int));
+    *numPoint = num;
     enqueue(getQueue(next), numPoint);
+    free(item);
 }
 
-void fourth_ao(activeObject *null, void *item)
+void fourth_ao(activeObject *next, void *item)
 {
     int num = *(int *)(item);
-    printf("Num is: %d\n", num);
+    printf("%d\n", num);
     num += 2;
-    printf("Num is: %d\n", num);
+    printf("%d\n", num);
+    free(item);
 }
 
 int main(int argc, char *argv[])
@@ -74,7 +76,11 @@ int main(int argc, char *argv[])
     else if (argc == 2)
     {
         srand(time(NULL));
-        randomSeed = rand();
+        randomSeed = (rand() % (10));
+    }
+    else if(argc == 3)
+    {
+        randomSeed = atoi(argv[2]);
     }
 
     activeObject *fourthAO = createActiveObject(NULL, fourth_ao);
@@ -84,11 +90,12 @@ int main(int argc, char *argv[])
 
     void *task = &randomSeed;
 
-    for (int i = 0; i < atoi(argv[1]); i++)
+    for (int i = 0; i <= atoi(argv[1]); i++)
     {
         int rand_seed = *(int *)task;
         enqueue(getQueue(firstAO), &rand_seed);
     }
+
 
     while (firstAO->queue->size > 0)
     {

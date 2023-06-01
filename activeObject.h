@@ -10,5 +10,5 @@ typedef struct activeObject
 
 void* activeObjectThread(void *object);
 activeObject * createActiveObject(activeObject * next, void (*otherFunc)(activeObject * AO ,  void* item));
-pqueue getQueue(activeObject* AO);
 void stop(activeObject *AO);
+Queue *getQueue(activeObject *AO);

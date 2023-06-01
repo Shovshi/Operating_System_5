@@ -8,10 +8,12 @@ void* activeObjectThread(void *object)
     activeObject* AO = (activeObject*)(object);
 
     void *task;
-    while(task = dequeue(AO->queue))
+    while((task = dequeue(AO->queue)))
     {
         AO->func(AO->next,task);
     }
+
+    return NULL;
 }
 
 activeObject * createActiveObject(activeObject * next, void (*otherFunc)(activeObject * AO ,  void* item))
